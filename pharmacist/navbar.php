@@ -6,6 +6,12 @@
 <html lang="zxx">
 <!--<![endif]-->
 
+<?php 
+    include_once("../config/config.inc.php");
+    include_once("../config/connectdb.php");
+    session_start();
+?>
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="description" content="Bingo One page parallax responsive HTML Template ">
@@ -24,16 +30,28 @@
     <!-- CSS
   ================================================== -->
     <!-- Themefisher Icon font -->
-    <link rel="stylesheet" href="plugins/themefisher-font.v-2/style.css">
+    <link rel="stylesheet" href="../plugins/themefisher-font.v-2/style.css">
     <!-- bootstrap.min css -->
-    <link rel="stylesheet" href="plugins/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/bootstrap/dist/css/bootstrap.min.css">
     <!-- Slick Carousel -->
-    <link rel="stylesheet" href="plugins/slick-carousel/slick/slick.css">
-    <link rel="stylesheet" href="plugins/slick-carousel/slick/slick-theme.css">
+    <link rel="stylesheet" href="../plugins/slick-carousel/slick/slick.css">
+    <link rel="stylesheet" href="../plugins/slick-carousel/slick/slick-theme.css">
     <!-- Main Stylesheet -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 
+    <!-- Main jQuery -->
+    <script src="../plugins/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="../plugins/bootstrap/dist/js/popper.min.js"></script>
+    <script src="../plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Owl Carousel -->
+    <script src="../plugins/slick-carousel/slick/slick.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- Smooth Scroll js -->
+    <script src="../plugins/smooth-scroll/dist/js/smooth-scroll.min.js"></script>
 
+    <!-- Custom js -->
+    <script src="../js/script.js"></script>
 
 </head>
 
@@ -64,41 +82,24 @@
                 <div class="col-md-12">
                     <nav class="navbar navbar-expand-lg">
                         <a class="navbar-brand" href="index.html">
-                            <img src="images/logo.png" alt="logo">
+                            <img src="../images/logo.png" alt="logo">
                         </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="tf-ion-android-menu"></span>
-                    </button>
+                            <span class="tf-ion-android-menu"></span>
+                        </button>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav ml-auto">
                                 <li class="nav-item active">
-                                    <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                                    <a class="nav-link" href="./index.php">Home <span class="sr-only">(current)</span></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="pricing.html">Buy/Sell</a>
+                                    <a class="nav-link" href="pricing.html">ข้อมูลยา</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="faq.html">F.A.Q</a>
+                                    <a class="nav-link" href="faq.html">ข้อมูลสมาชิก</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="contact.html">Contact</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="login.html">Sign In</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="signup.html">Sign Up</a>
-                                </li>
-
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Pages
-                                </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="team.html">Team Page</a>
-                                        <a class="dropdown-item" href="404.html">404 Page</a>
-                                        <a class="dropdown-item" href="blog.html">Blog Page</a>
-                                    </div>
+                                    <a class="nav-link" href="contact.html">ประวัติการขาย</a>
                                 </li>
                             </ul>
                         </div>
@@ -108,8 +109,3 @@
             </div>
         </div>
     </section>
-
-    <!--
-Welcome Slider
-==================================== -->
-
