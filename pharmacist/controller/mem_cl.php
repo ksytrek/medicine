@@ -11,11 +11,6 @@ if (isset($_POST['key']) && $_POST['key'] == 'form_add_mem') {
     $drug_se = $value['drug_se'];
     $sql_insert_member = "INSERT INTO `member` (`id_mem`, `name_mem`) VALUES (NULL, 'ริส');";
 
-
-    // print_r($drug_se);
-    // foreach($drug_se as $row_se){
-    //     echo $row_se;
-    //             }
     try {
         if(Database::query($sql_insert_member)){
             $id_mem =  Database::query("SELECT MAX(id_mem) as max FROM `member`",PDO::FETCH_ASSOC)->fetch(PDO::FETCH_ASSOC)['max'];

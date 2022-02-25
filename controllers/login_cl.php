@@ -18,7 +18,7 @@ if(isset($_POST['submit'])){
         $_SESSION['id'] = $rw_pha['id_pma'];
         echo "<script> 
                 alert('เข้าสู่ระบบสำเร็จ') ;
-                location.assign('../pharmacist/index.php');
+                location.assign('../pharmacist/index');
             </script>";
     }else{
         $sql_ad = "SELECT * FROM `admin` WHERE username_ad = '$username' AND password_ad = '$password'";
@@ -29,14 +29,14 @@ if(isset($_POST['submit'])){
             $_SESSION['id'] = $rw_ad['id_ad'];
             echo "<script> 
                     alert('เข้าสู่ระบบสำเร็จ') ;
-                    location.assign('../admin/index.php');
+                    location.assign('../admin/index');
                 </script>";
         }else{
             // echo "FETCH_ASSOC";
             session_destroy();
             echo "<script> 
                     alert('กรุณาตรวจสอบ User และ Password ใหม่') ;
-                    location.assign('../index.php');
+                    location.assign('../index');
                 </script>";
             
         }

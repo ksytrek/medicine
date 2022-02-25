@@ -84,7 +84,7 @@ session_start();
             <div class="row">
                 <div class="col-md-12">
                     <nav class="navbar navbar-expand-lg">
-                        <a class="navbar-brand" href="index.html">
+                        <a class="navbar-brand" href="index">
                             <img src="../images/logo.png" alt="logo">
                         </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -93,19 +93,19 @@ session_start();
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav ml-auto">
                                 <li class="nav-item active">
-                                    <a class="nav-link" href="./index.php">Home <span class="sr-only">(current)</span></a>
+                                    <a class="nav-link" href="./index">Home <span class="sr-only">(current)</span></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="./drug_information.php">ข้อมูลยา</a>
+                                    <a class="nav-link" href="./drug_information">ข้อมูลยา</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="./information_mem.php">ข้อมูลสมาชิก</a>
+                                    <a class="nav-link" href="./information_mem">ข้อมูลสมาชิก</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="contact.html">ประวัติการขาย</a>
+                                    <a class="nav-link" href="">ประวัติการขาย</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="contact.html">ออกจากระบบ</a>
+                                    <a class="nav-link" href="">ออกจากระบบ</a>
                                 </li>
                             </ul>
                         </div>
