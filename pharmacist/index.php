@@ -3,8 +3,6 @@
 <!-- https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css
 https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap4.min.css -->
 <!-- https://code.jquery.com/jquery-3.6.0.min.js -->
-
-
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js"></script>
 
@@ -12,123 +10,9 @@ https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap4.min.css -->
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/dataTables.jqueryui.min.js"></script>
 
-<script>
-    $(document).ready(function() {
-        var product = [];
-        if (readCookie('product') == null) {
 
-            createCookie("product", JSON.stringify(product));
 
-        }
-    });
-    //  COOKie function 
-    function createCookie(name, value, days = 1) { // date /1 วัน
-        var expires = "";
-        if (days) {
-            var date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
 
-            expires = "; expires=" + date.toUTCString();
-        }
-        document.cookie = name + "=" + value + expires + "; path=/";
-    }
-
-    function readCookie(name) {
-        var name1 = name + "=";
-        var ca = document.cookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1, c.length);
-            }
-            if (c.indexOf(name1) == 0) {
-                return c.substring(name1.length, c.length);
-            }
-        }
-        return null;
-    }
-
-    function removeCookie(name) {
-        createCookie(name, "", -1);
-    }
-
-    function add_product(id_drug, name_drug, price_unit, num_item) {
-        var product = [];
-        var int_i = 0;
-
-        product_new = {
-            id_drug: id_drug,
-            name_drug: name_drug,
-            price_unit: price_unit,
-            price_unit: price_unit,
-            num_item: num_item
-        };
-
-        if (readCookie('product') == null) {
-            createCookie("product", JSON.stringify(product));
-
-            product.push(product_new);
-            createCookie("product", JSON.stringify(product));
-            update_product();
-
-        } else {
-            product = JSON.parse(readCookie('product')); // array type
-            product.forEach(function(value, i) {
-                if (value.id_drug == id_drug) {
-                    int_i += 1;
-                    product[i].num_item += num_item;
-                }
-            });
-
-            if (int_i == 0) {
-
-                product.push(product_new);
-                createCookie("product", JSON.stringify(product));
-
-                update_product();
-            } else {
-                createCookie("product", JSON.stringify(product));
-                update_product();
-            }
-
-        }
-        $("#" + num_item).val(1);
-    }
-
-    function update_product() {
-        // var product = json.parse(readCookie('product'));
-        var str_items = "";
-
-        const json = readCookie('product');
-        const product = JSON.parse(json);
-
-        var sum_total = 0;
-
-        $('#tb_shell').empty();
-        // tb_mg_room.clear();
-        product.forEach(function(value, index) {
-            // alert(index);
-
-            str_items += '<tr>' +
-                '<td>' + value.name_drug + '</td>' +
-                '<td>' + value.price_unit + '</td>' +
-                '<td>' + value.num_item + '</td>' +
-                '<td>' + value.num_item * value.price_unit + '</td>' +
-                '</tr>';
-            sum_total += value.num_item * value.price_unit;
-
-        });
-        // alert(product.length)
-        if (product.length == 0 || product == null) {
-
-            str_items += "<tr><td>ไม่พบรายการ</td><td></td><td></td><td></td></tr>";
-        }
-        $("#sum_total").html(sum_total)
-        $('#tb_shell').html(str_items);
-    }
-
-    // add_product('1', 'ยา', '150', 6);
-</script>
 
 
 <section class="pricing-table section" id="pricing">
@@ -184,7 +68,7 @@ https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap4.min.css -->
                         const product = JSON.parse(json);
 
 
-                    
+
 
 
                         const trnsale = JSON.stringify(product)
@@ -194,7 +78,7 @@ https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap4.min.css -->
                             type: "POST",
                             data: {
                                 key: "add_trnsale",
-                                data : trnsale,
+                                data: trnsale,
                                 id_pma: "<?php echo $_SESSION["id"] ?>",
                                 id_mem: id_mem
                             },
@@ -203,7 +87,7 @@ https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap4.min.css -->
                                 if (result == 'success') {
                                     removeCookie('product');
                                     alert("ขายสินค้าสำเร็จ")
-                                    // location.reload();
+                                    location.reload();
                                     update_product();
                                 } else if (result == 'error') {
                                     alert('ระบบตรวจพบข้อผิดพลาดบางอย่าง')

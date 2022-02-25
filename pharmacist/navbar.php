@@ -6,10 +6,10 @@
 <html lang="zxx">
 <!--<![endif]-->
 
-<?php 
-    include_once("../config/config.inc.php");
-    include_once("../config/connectdb.php");
-    session_start();
+<?php
+include_once "../config/config.inc.php";
+include_once "../config/connectdb.php";
+session_start();
 ?>
 
 <head>
@@ -38,6 +38,9 @@
     <link rel="stylesheet" href="../plugins/slick-carousel/slick/slick-theme.css">
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="../css/style.css">
+
+
+
 
     <!-- Main jQuery -->
     <script src="../plugins/jquery/dist/jquery.min.js"></script>
@@ -93,10 +96,10 @@
                                     <a class="nav-link" href="./index.php">Home <span class="sr-only">(current)</span></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="pricing.html">ข้อมูลยา</a>
+                                    <a class="nav-link" href="./drug_information.php">ข้อมูลยา</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="faq.html">ข้อมูลสมาชิก</a>
+                                    <a class="nav-link" href="./information_mem.php">ข้อมูลสมาชิก</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="contact.html">ประวัติการขาย</a>
@@ -112,3 +115,122 @@
             </div>
         </div>
     </section>
+
+
+<script>
+    $(document).ready(function() {
+        var product = [];
+        if (readCookie('product') == null) {
+
+            createCookie("product", JSON.stringify(product));
+
+        }
+    });
+    //  COOKie function
+    function createCookie(name, value, days = 1) { // date /1 วัน
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + value + expires + "; path=/";
+    }
+
+    function readCookie(name) {
+        var name1 = name + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1, c.length);
+            }
+            if (c.indexOf(name1) == 0) {
+                return c.substring(name1.length, c.length);
+            }
+        }
+        return null;
+    }
+
+    function removeCookie(name) {
+        createCookie(name, "", -1);
+    }
+
+    function add_product(id_drug, name_drug, price_unit, num_item) {
+        var product = [];
+        var int_i = 0;
+
+        product_new = {
+            id_drug: id_drug,
+            name_drug: name_drug,
+            price_unit: price_unit,
+            price_unit: price_unit,
+            num_item: num_item
+        };
+
+        if (readCookie('product') == null) {
+            createCookie("product", JSON.stringify(product));
+
+            product.push(product_new);
+            createCookie("product", JSON.stringify(product));
+            update_product();
+
+        } else {
+            product = JSON.parse(readCookie('product')); // array type
+            product.forEach(function(value, i) {
+                if (value.id_drug == id_drug) {
+                    int_i += 1;
+                    product[i].num_item += num_item;
+                }
+            });
+
+            if (int_i == 0) {
+
+                product.push(product_new);
+                createCookie("product", JSON.stringify(product));
+
+                update_product();
+            } else {
+                createCookie("product", JSON.stringify(product));
+                update_product();
+            }
+
+        }
+        $("#" + num_item).val(1);
+    }
+
+    function update_product() {
+        // var product = json.parse(readCookie('product'));
+        var str_items = "";
+
+        const json = readCookie('product');
+        const product = JSON.parse(json);
+
+        var sum_total = 0;
+
+        $('#tb_shell').empty();
+        // tb_mg_room.clear();
+        product.forEach(function(value, index) {
+            // alert(index);
+
+            str_items += '<tr>' +
+                '<td>' + value.name_drug + '</td>' +
+                '<td>' + value.price_unit + '</td>' +
+                '<td>' + value.num_item + '</td>' +
+                '<td>' + value.num_item * value.price_unit + '</td>' +
+                '</tr>';
+            sum_total += value.num_item * value.price_unit;
+
+        });
+        // alert(product.length)
+        if (product.length == 0 || product == null) {
+
+            str_items += "<tr><td>ไม่พบรายการ</td><td></td><td></td><td></td></tr>";
+        }
+        $("#sum_total").html(sum_total)
+        $('#tb_shell').html(str_items);
+    }
+
+    // add_product('1', 'ยา', '150', 6);
+</script>
