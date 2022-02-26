@@ -29,7 +29,7 @@ if(isset($_POST['submit'])){
             $_SESSION['id'] = $rw_ad['id_ad'];
             echo "<script> 
                     alert('เข้าสู่ระบบสำเร็จ') ;
-                    location.assign('../admin/index');
+                    location.assign('../pharmacist/index');
                 </script>";
         }else{
             // echo "FETCH_ASSOC";

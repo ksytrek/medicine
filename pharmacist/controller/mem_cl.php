@@ -9,7 +9,7 @@ if (isset($_POST['key']) && $_POST['key'] == 'form_add_mem') {
 
     $name_mem = $value['name_mem'];
     $drug_se = $value['drug_se'];
-    $sql_insert_member = "INSERT INTO `member` (`id_mem`, `name_mem`) VALUES (NULL, 'ริส');";
+    $sql_insert_member = "INSERT INTO `member` (`id_mem`, `name_mem`) VALUES (NULL, '$name_mem');";
 
     try {
         if(Database::query($sql_insert_member)){

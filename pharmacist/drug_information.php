@@ -112,7 +112,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="javascript:update_drug(id)" method="post">
+            <form id="form_add_drug" action="javascript:void(0)" method="post" >
                 <div class="modal-body">
                     <div class="form-group">
                         <label class="control-label">ชื่อยา</label>
@@ -183,6 +183,8 @@
         $inputs.each(function() {
             values[this.name] = $(this).val();
         });
+
+        console.log(values);
 
         $.ajax({
             url: "./controller/form_drug.php",

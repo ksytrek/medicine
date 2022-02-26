@@ -1,4 +1,15 @@
-<?php include("./navbar.php") ?>
+<?php include("./navbar.php");
+
+$date_sq = '';
+$start_date = '';
+$end_date = '';
+if (isset($_GET['submit'])) {
+    $start_date = $_GET['start_date'];
+    $end_date = $_GET['end_date'];
+    $date_sq = " WHERE  ord.dateTime_oh BETWEEN '$start_date' and '$end_date' ";
+}
+
+?>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js"></script>
 
@@ -9,8 +20,30 @@
 
 <section class="pricing-table section" id="pricing">
     <div class="container">
+        <h3>ประวัติการขาย</h3>
+        <form action="" method="GET">
+            <div class="form-group ">
+                <div class="row">
+                    <div class="col-md-4">
+                        <input type="date" name="start_date" class="form-control" value="<?php echo isset($_GET['start_date']) ? $_GET['start_date'] : '' ;?>">
+                    </div>
+                    <div class="col-md-2 text-center">
+                        ถึง
+                    </div>
+                    <div class="col-md-4">
+                        <input type="date" name="end_date" class="form-control" value="<?php echo isset($_GET['end_date']) ? $_GET['end_date'] : date("Y-m-d"); ?>">
+
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <button type="submit" name="submit" value="submit" class="btn btn-primary btn-sm">ค้นหา</button>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+
+
         <div class="row">
-            <h3>ประวัติการขาย</h3>
             <div class="col-sm-12">
                 <table id="tb_ordertl" class="table table-striped table-bordered">
                     <thead>
@@ -26,7 +59,12 @@
                     <tbody>
 
                         <?php
-                        $sql_ord = "SELECT * FROM `order_history` as ord INNER JOIN member as mm ON mm.id_mem = ord.id_mem INNER JOIN pharmacist as pha on pha.id_pma = ord.id_pma;";
+
+
+                        $sql_ord = "SELECT * FROM `order_history` as ord 
+                                    INNER JOIN member as mm ON mm.id_mem = ord.id_mem 
+                                    INNER JOIN pharmacist as pha on pha.id_pma = ord.id_pma  
+                                    $date_sq";
                         $i = null;
                         foreach (Database::query($sql_ord) as $row_ord) :
                         ?>
@@ -57,18 +95,18 @@
                                                             <strong>ลำดับ</strong>
                                                         </div>
                                                         <div class="col-sm">
-                                                           <strong>ชื่อยา</strong>
+                                                            <strong>ชื่อยา</strong>
                                                         </div>
                                                         <div class="col-sm">
-                                                           <strong>จำนวน</strong>
-                                                            
+                                                            <strong>จำนวน</strong>
+
                                                         </div>
                                                         <div class="col-sm">
-                                                           <strong>ราคา</strong>
-                                            
+                                                            <strong>ราคา</strong>
+
                                                         </div>
                                                         <div class="col-sm">
-                                                           <strong>ราคารวม</strong>
+                                                            <strong>ราคารวม</strong>
                                                         </div>
                                                     </div>
                                                     <?php

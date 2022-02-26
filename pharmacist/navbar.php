@@ -10,6 +10,19 @@
 include_once "../config/config.inc.php";
 include_once "../config/connectdb.php";
 session_start();
+
+
+$key = null;
+if (isset($_SESSION['key']) && ($_SESSION['key'] == 'admin' || $_SESSION['key'] == 'pharmacist')) {
+    $key = $_SESSION['key'];
+} else {
+    echo "<script> 
+    alert('กรุณาล็อกอิน') ;
+    location.assign('../index');
+</script>";
+}
+
+
 ?>
 
 <head>
@@ -18,7 +31,7 @@ session_start();
 
     <meta name="author" content="Themefisher.com">
 
-    <title>Bit-Bank</title>
+    <title>Pharmacy</title>
 
     <!-- Mobile Specific Meta
   ================================================== -->
@@ -85,7 +98,7 @@ session_start();
                 <div class="col-md-12">
                     <nav class="navbar navbar-expand-lg">
                         <a class="navbar-brand" href="index">
-                            <img src="../images/logo.png" alt="logo">
+                            <!-- <img src="../images/logo.png" alt="logo"> -->
                         </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="tf-ion-android-menu"></span>
@@ -101,11 +114,17 @@ session_start();
                                 <li class="nav-item">
                                     <a class="nav-link" href="./information_mem">ข้อมูลสมาชิก</a>
                                 </li>
+                                <?php if($key == 'admin'): ?>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="./pharmacist_inform">ข้อมูลเภสัช</a>
+                                    </li>
+                                <?php endif; ?>
                                 <li class="nav-item">
                                     <a class="nav-link" href="./order_history">ประวัติการขาย</a>
                                 </li>
+
                                 <li class="nav-item">
-                                    <a class="nav-link" href="">ออกจากระบบ</a>
+                                    <a class="nav-link" href="../controllers/logout.php">ออกจากระบบ</a>
                                 </li>
                             </ul>
                         </div>
@@ -117,120 +136,120 @@ session_start();
     </section>
 
 
-<script>
-    $(document).ready(function() {
-        var product = [];
-        if (readCookie('product') == null) {
+    <script>
+        $(document).ready(function() {
+            var product = [];
+            if (readCookie('product') == null) {
 
-            createCookie("product", JSON.stringify(product));
+                createCookie("product", JSON.stringify(product));
 
-        }
-    });
-    //  COOKie function
-    function createCookie(name, value, days = 1) { // date /1 วัน
-        var expires = "";
-        if (days) {
-            var date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-
-            expires = "; expires=" + date.toUTCString();
-        }
-        document.cookie = name + "=" + value + expires + "; path=/";
-    }
-
-    function readCookie(name) {
-        var name1 = name + "=";
-        var ca = document.cookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1, c.length);
             }
-            if (c.indexOf(name1) == 0) {
-                return c.substring(name1.length, c.length);
+        });
+        //  COOKie function
+        function createCookie(name, value, days = 1) { // date /1 วัน
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+
+                expires = "; expires=" + date.toUTCString();
             }
+            document.cookie = name + "=" + value + expires + "; path=/";
         }
-        return null;
-    }
 
-    function removeCookie(name) {
-        createCookie(name, "", -1);
-    }
-
-    function add_product(id_drug, name_drug, price_unit, num_item) {
-        var product = [];
-        var int_i = 0;
-
-        product_new = {
-            id_drug: id_drug,
-            name_drug: name_drug,
-            price_unit: price_unit,
-            price_unit: price_unit,
-            num_item: num_item
-        };
-
-        if (readCookie('product') == null) {
-            createCookie("product", JSON.stringify(product));
-
-            product.push(product_new);
-            createCookie("product", JSON.stringify(product));
-            update_product();
-
-        } else {
-            product = JSON.parse(readCookie('product')); // array type
-            product.forEach(function(value, i) {
-                if (value.id_drug == id_drug) {
-                    int_i += 1;
-                    product[i].num_item += num_item;
+        function readCookie(name) {
+            var name1 = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1, c.length);
                 }
-            });
+                if (c.indexOf(name1) == 0) {
+                    return c.substring(name1.length, c.length);
+                }
+            }
+            return null;
+        }
 
-            if (int_i == 0) {
+        function removeCookie(name) {
+            createCookie(name, "", -1);
+        }
+
+        function add_product(id_drug, name_drug, price_unit, num_item) {
+            var product = [];
+            var int_i = 0;
+
+            product_new = {
+                id_drug: id_drug,
+                name_drug: name_drug,
+                price_unit: price_unit,
+                price_unit: price_unit,
+                num_item: num_item
+            };
+
+            if (readCookie('product') == null) {
+                createCookie("product", JSON.stringify(product));
 
                 product.push(product_new);
                 createCookie("product", JSON.stringify(product));
-
                 update_product();
+
             } else {
-                createCookie("product", JSON.stringify(product));
-                update_product();
+                product = JSON.parse(readCookie('product')); // array type
+                product.forEach(function(value, i) {
+                    if (value.id_drug == id_drug) {
+                        int_i += 1;
+                        product[i].num_item += num_item;
+                    }
+                });
+
+                if (int_i == 0) {
+
+                    product.push(product_new);
+                    createCookie("product", JSON.stringify(product));
+
+                    update_product();
+                } else {
+                    createCookie("product", JSON.stringify(product));
+                    update_product();
+                }
+
             }
-
+            $("#" + num_item).val(1);
         }
-        $("#" + num_item).val(1);
-    }
 
-    function update_product() {
-        // var product = json.parse(readCookie('product'));
-        var str_items = "";
+        function update_product() {
+            // var product = json.parse(readCookie('product'));
+            var str_items = "";
 
-        const json = readCookie('product');
-        const product = JSON.parse(json);
+            const json = readCookie('product');
+            const product = JSON.parse(json);
 
-        var sum_total = 0;
+            var sum_total = 0;
 
-        $('#tb_shell').empty();
-        // tb_mg_room.clear();
-        product.forEach(function(value, index) {
-            // alert(index);
+            $('#tb_shell').empty();
+            // tb_mg_room.clear();
+            product.forEach(function(value, index) {
+                // alert(index);
 
-            str_items += '<tr>' +
-                '<td>' + value.name_drug + '</td>' +
-                '<td>' + value.price_unit + '</td>' +
-                '<td>' + value.num_item + '</td>' +
-                '<td>' + value.num_item * value.price_unit + '</td>' +
-                '</tr>';
-            sum_total += value.num_item * value.price_unit;
+                str_items += '<tr>' +
+                    '<td>' + value.name_drug + '</td>' +
+                    '<td>' + value.price_unit + '</td>' +
+                    '<td>' + value.num_item + '</td>' +
+                    '<td>' + value.num_item * value.price_unit + '</td>' +
+                    '</tr>';
+                sum_total += value.num_item * value.price_unit;
 
-        });
-        // alert(product.length)
-        if (product.length == 0 || product == null) {
+            });
+            // alert(product.length)
+            if (product.length == 0 || product == null) {
 
-            str_items += "<tr><td>ไม่พบรายการ</td><td></td><td></td><td></td></tr>";
+                str_items += "<tr><td>ไม่พบรายการ</td><td></td><td></td><td></td></tr>";
+            }
+            $("#sum_total").html(sum_total)
+            $('#tb_shell').html(str_items);
         }
-        $("#sum_total").html(sum_total)
-        $('#tb_shell').html(str_items);
-    }
 
-    // add_product('1', 'ยา', '150', 6);
-</script>
+        // add_product('1', 'ยา', '150', 6);
+    </script>
