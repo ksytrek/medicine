@@ -114,7 +114,7 @@ if (isset($_SESSION['key']) && ($_SESSION['key'] == 'admin' || $_SESSION['key'] 
                                 <li class="nav-item">
                                     <a class="nav-link" href="./information_mem">ข้อมูลสมาชิก</a>
                                 </li>
-                                <?php if($key == 'admin'): ?>
+                                <?php if ($key == 'admin') : ?>
                                     <li class="nav-item">
                                         <a class="nav-link" href="./pharmacist_inform">ข้อมูลเภสัช</a>
                                     </li>
@@ -176,7 +176,7 @@ if (isset($_SESSION['key']) && ($_SESSION['key'] == 'admin' || $_SESSION['key'] 
             createCookie(name, "", -1);
         }
 
-        function add_product(id_drug, name_drug, price_unit, num_item) {
+        function add_product(id_drug, name_drug, price_unit, num_item, stock) {
             var product = [];
             var int_i = 0;
 
@@ -198,10 +198,16 @@ if (isset($_SESSION['key']) && ($_SESSION['key'] == 'admin' || $_SESSION['key'] 
             } else {
                 product = JSON.parse(readCookie('product')); // array type
                 product.forEach(function(value, i) {
-                    if (value.id_drug == id_drug) {
-                        int_i += 1;
-                        product[i].num_item += num_item;
+                    if (stock > value.num_item) {
+                        if (value.id_drug == id_drug) {
+                            int_i += 1;
+                            product[i].num_item += num_item;
+                        }
+                    } else {
+                        alert("สินค้าหมด");
+                        break;
                     }
+
                 });
 
                 if (int_i == 0) {

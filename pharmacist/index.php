@@ -69,14 +69,8 @@ if (isset($key) && $key == 'pharmacist') :
                             id_mem = $("#select_mem").val();
                             id_pma = "<?php echo $_SESSION["id"] ?>"
 
-
                             const json = readCookie('product');
                             const product = JSON.parse(json);
-
-
-
-
-
                             const trnsale = JSON.stringify(product)
                             // console.log(trnsale);
                             $.ajax({
@@ -139,7 +133,7 @@ if (isset($key) && $key == 'pharmacist') :
                                     <td><?php echo  $row_drug['price_drug']; ?></td>
                                     <td><?php echo  $row_drug['expi_date_durg']; ?></td>
                                     <td><?php echo  $row_drug['stock']; ?></td>
-                                    <td class="text-center"><a href="javascript:add_product('<?php echo  $row_drug['id_drug']; ?>','<?php echo  $row_drug['name_drug']; ?>','<?php echo  $row_drug['price_drug']; ?>',1)">เพิ่ม</a></td>
+                                    <td class="text-center"><a href="javascript:add_product('<?php echo  $row_drug['id_drug']; ?>','<?php echo  $row_drug['name_drug']; ?>','<?php echo  $row_drug['price_drug']; ?>',1,'<?php echo  $row_drug['stock']; ?>')">เพิ่ม</a></td>
                                 </tr>
 
                             <?php
