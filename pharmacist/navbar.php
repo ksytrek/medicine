@@ -102,7 +102,7 @@ session_start();
                                     <a class="nav-link" href="./information_mem">ข้อมูลสมาชิก</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="">ประวัติการขาย</a>
+                                    <a class="nav-link" href="./order_history">ประวัติการขาย</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="">ออกจากระบบ</a>
