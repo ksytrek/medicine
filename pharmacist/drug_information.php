@@ -29,7 +29,7 @@
                     <tbody>
 
                         <?php
-                        $sql_drug = "SELECT * FROM `drug_information`";
+                        $sql_drug = "SELECT * FROM `drug_information` WHERE status = '1'";
                         $i = null;
                         foreach (Database::query($sql_drug) as $row_drug) :
                         ?>

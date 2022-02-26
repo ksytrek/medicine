@@ -12,7 +12,7 @@
 <section class="pricing-table section" id="pricing">
     <div class="container">
         <div class="row">
-            <h3>ข้อมูลสมาชิก</h3>
+            <h3>ข้อมูลสมาชิก</h3> <div class="text-danger">( หากต้องการเเก้ไขยาที่เเพ้ ให้ลบสมาชิกแล้วค่อยเพิ่มใหม่)</div>
             <div class="col-sm-12">
                 <table id="tb_drug" class="table table-striped table-bordered">
                     <thead>

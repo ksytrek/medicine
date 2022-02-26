@@ -66,7 +66,7 @@ if (isset($_POST['key']) && $_POST['key'] == 'form_edit_drug') {
 if (isset($_POST['key']) && $_POST['key'] == 'delete_drug'){
     $id_drug = $_POST['id'];
 
-    $sql_delete_drug = "DELETE FROM `drug_information` WHERE `drug_information`.`id_drug` = '$id_drug'";
+    $sql_delete_drug = "UPDATE `drug_information` SET `status` = '0' WHERE `drug_information`.`id_drug` = '$id_drug'";
 
     try {
         if(Database::query($sql_delete_drug)){
