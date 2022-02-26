@@ -180,6 +180,7 @@ if (isset($_SESSION['key']) && ($_SESSION['key'] == 'admin' || $_SESSION['key'] 
             var product = [];
             var int_i = 0;
 
+            // alert(stock)
             product_new = {
                 id_drug: id_drug,
                 name_drug: name_drug,
@@ -187,6 +188,18 @@ if (isset($_SESSION['key']) && ($_SESSION['key'] == 'admin' || $_SESSION['key'] 
                 price_unit: price_unit,
                 num_item: num_item
             };
+
+            const json_r = readCookie('product');
+            const product_d = JSON.parse(json_r);
+
+            product_d.forEach(function(value, index) {
+                // value.num_item
+
+                if (value.id_drug == id_drug) {
+
+
+                }
+            });
 
             if (readCookie('product') == null) {
                 createCookie("product", JSON.stringify(product));
@@ -196,16 +209,23 @@ if (isset($_SESSION['key']) && ($_SESSION['key'] == 'admin' || $_SESSION['key'] 
                 update_product();
 
             } else {
+
+
                 product = JSON.parse(readCookie('product')); // array type
                 product.forEach(function(value, i) {
-                    if (stock > value.num_item) {
-                        if (value.id_drug == id_drug) {
+                    // if (stock > value.num_item) {
+                    // alert(value.num_item);
+                    if (value.id_drug == id_drug) {
+                        if (value.num_item + 1 > stock) {
+                            int_i += 1;
+                            alert('สินค้าหมด')
+                            // update_product();
+                            return;
+                        } else {
                             int_i += 1;
                             product[i].num_item += num_item;
                         }
-                    } else {
-                        alert("สินค้าหมด");
-                        break;
+
                     }
 
                 });
