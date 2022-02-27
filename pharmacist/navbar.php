@@ -118,6 +118,9 @@ if (isset($_SESSION['key']) && ($_SESSION['key'] == 'admin' || $_SESSION['key'] 
                                     <li class="nav-item">
                                         <a class="nav-link" href="./pharmacist_inform">ข้อมูลเภสัช</a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#edit_admin">แก้ไขข้อมูล Admin</a>
+                                    </li>
                                 <?php endif; ?>
                                 <li class="nav-item">
                                     <a class="nav-link" href="./order_history">ประวัติการขาย</a>
@@ -134,8 +137,82 @@ if (isset($_SESSION['key']) && ($_SESSION['key'] == 'admin' || $_SESSION['key'] 
             </div>
         </div>
     </section>
+    <!-- Modal -->
+    <?php if ($key == 'admin') :
+        $id_ad = $_SESSION['id'];
+        $row_ad = Database::query("SELECT * FROM `admin` WHERE id_ad = '$id_ad'", PDO::FETCH_ASSOC)->fetch(PDO::FETCH_ASSOC);
+    ?>
+        <div class="modal fade" id="edit_admin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">แก้ไขข้อมูล</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <!-- <div class="modal-body"> -->
+                    <form id="form_edit_admin" action="javascript:void(0)" method="post" enctype="multipart/form-data">
+                        <div class="modal-body">
+                            <input type="hidden" name="id_ad" value="<?php echo $row_ad['id_ad']; ?>">
+                            <div class="form-group">
+                                <label class="control-label">ชื่อผู้ดูเเลระบบ</label>
+                                <input type="text" class="form-control" placeholder="ชื่อผู้ดูเเลระบบ" name="name_ad" value="<?php echo $row_ad['name_ad']; ?>">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Username</label>
+                                <input type="text" class="form-control" placeholder="Username" name="username_ad" value="<?php echo $row_ad['username_ad']; ?>">
+                            </div>
 
 
+                            <div class="form-group">
+                                <label class="control-label">Password</label>
+                                <input type="password" class="form-control" placeholder="Password" name="password_ad" value="<?php echo $row_ad['password_ad']; ?>">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                            <button type="submit" class="btn btn-primary">แก้ไข</button>
+                        </div>
+                    </form>
+                    <!-- </div> -->
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $('#form_edit_admin').submit(function() {
+                var $inputs = $("#form_edit_admin :input");
+                var values = {};
+                $inputs.each(function() {
+                    values[this.name] = $(this).val();
+                });
+
+                console.log(values);
+                $.ajax({
+                    url: "./controller/admin_cl.php",
+                    type: "POST",
+                    data: {
+                        key: "form_edit_admin",
+                        data: values
+                    },
+                    success: function(result, textStatus, jqXHR) {
+                        console.log(result);
+                        if (result == "success") {
+                            alert(result + " : สำเร็จ");
+                            location.reload();
+                        } else {
+                            alert(result + " : ตรวจพบข้อผิดพลาด");
+                        }
+                    },
+                    error: function(result, textStatus, jqXHR) {
+                        alert(result + " : ตรวจพบข้อผิดพลาด");
+                    }
+                });
+            });
+        </script>
+    <?php endif; ?>
     <script>
         $(document).ready(function() {
             var product = [];
