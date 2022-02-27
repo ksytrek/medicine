@@ -76,10 +76,9 @@ if (isset($_GET['submit'])) {
                                 <td><?php echo $row_ord['dateTime_oh']; ?></td>
                                 <td>
                                     <a href="javascript:void(0)" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#detli_<?php echo $row_ord['id_oh'] ?>">รายละเอียด</a>
-                                    <a href="javascript:window.print()" class="btn btn-primary btn-sm" >พิมพ์</a>
-                                    <button onclick="window.print()">Print this page</button>
+                                    <a href="javascript:printDiv(<?php echo $row_ord['id_oh']?>,<?php echo $row_ord['id_pma']?>)" class="btn btn-success btn-sm">พิมพ์ใบเสร็จ</a>
 
-                                    <a href="./export?id_oh=<?php echo Encode_valu::encode($row_ord['id_oh'],"id_oh")  ?>&id_pma=<?php echo Encode_valu::encode($row_ord['id_pma'],"id_pma") ?>" class="btn btn-info btn-sm">ใบเสร็จ</a>
+                                    <a href="./export?id_oh=<?php echo $row_ord['id_oh']  ?>&id_pma=<?php echo $row_ord['id_pma']?>" class="btn btn-info btn-sm">ดูใบเสร็จ</a>
                                 </td>
                                 <div id="detli_<?php echo $row_ord['id_oh'] ?>" class="modal" tabindex="-1">
                                     <div class="modal-dialog modal-lg">
@@ -159,7 +158,19 @@ if (isset($_GET['submit'])) {
         </div>
     </div>
 </section>
+<div id="print"></div>
 <script>
+    function printDiv(id_oh,id_pma) {
+        var divContents = document.getElementById("print").innerHTML;
+        var a = window.open('export.php?id_oh='+id_oh+'&id_pma='+id_pma,"","height='500', width='500'");
+        // , '', "height='100%', width='100%'"
+        // a.document.write('<html>');
+        // a.document.write('<body > <h1>Div contents are <br>');
+        // a.document.write(divContents);
+        // a.document.write('</body></html>');
+        a.document.close();
+        a.print();
+    }
     $(document).ready(function() {
         $('#tb_ordertl').DataTable({
             lengthMenu: [

@@ -20,7 +20,7 @@ class PDF extends FPDF
 	}
 	function header()
 	{
-		$id_pma = Encode_valu::decode($_GET['id_pma'],"id_pma") ;;
+		$id_pma = $_GET['id_pma'];;
 		
 		$name_pma  = Database::query("SELECT * FROM `pharmacist` WHERE id_pma = '$id_pma'", PDO::FETCH_OBJ)->fetch(PDO::FETCH_OBJ)->name_pma;
 		$this->AddFont('sarabun', 'B', 'THSarabunB.php');
@@ -46,7 +46,7 @@ class PDF extends FPDF
 		$this->Cell(30, 10, iconv('utf-8', 'cp874', 'ราคารวม'), 1, 0, 'C');
 
 
-		$id_oh = Encode_valu::decode($_GET['id_oh'],"id_oh") ;
+		$id_oh = $_GET['id_oh'] ;
 		$i = null;
 		$sum = null;
 		$sql = "SELECT * FROM `detail_history` as det INNER JOIN drug_information as dru ON det.id_drug = dru.id_drug WHERE det.id_oh = '$id_oh'";

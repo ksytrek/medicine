@@ -20,7 +20,20 @@ https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap4.min.css -->
 if (isset($key) && $key == 'pharmacist') :
 ?>
 
-
+    <div id="print"></div>
+    <script>
+        function printDiv(id_oh, id_pma) {
+            var divContents = document.getElementById("print").innerHTML;
+            var a = window.open('export.php?id_oh=' + id_oh + '&id_pma=' + id_pma, "", "height='500', width='500'");
+            // , '', "height='100%', width='100%'"
+            // a.document.write('<html>');
+            // a.document.write('<body > <h1>Div contents are <br>');
+            // a.document.write(divContents);
+            // a.document.write('</body></html>');
+            a.document.close();
+            a.print();
+        }
+    </script>
     <section class="pricing-table section" id="pricing">
         <div class="container">
             <div class="row">
@@ -73,7 +86,7 @@ if (isset($key) && $key == 'pharmacist') :
                             const product = JSON.parse(json);
                             const trnsale = JSON.stringify(product)
                             // console.log(trnsale);
-                            if(product == null || product == '' ){
+                            if (product == null || product == '') {
                                 return alert('กรุณาเพิ่มสินค้า')
                             }
                             $.ajax({
@@ -90,6 +103,14 @@ if (isset($key) && $key == 'pharmacist') :
                                     if (result == 'success') {
                                         removeCookie('product');
                                         alert("ขายสินค้าสำเร็จ")
+                                        <?php
+                                        $sql_Max = "SELECT MAX(id_oh) as max_s FROM `order_history`";
+                                        $max_id = Database::query($sql_Max,PDO::FETCH_OBJ)->fetch(PDO::FETCH_OBJ)->max_s;
+                                        $sql_ord_D = "SELECT * FROM `order_history` WHERE id_oh = '$max_id'";
+                                        $id_pma_d = Database::query($sql_ord_D,PDO::FETCH_OBJ)->fetch(PDO::FETCH_OBJ)->id_pma;
+                                        ?>
+                                        printDiv(<?php echo $max_id ?>,<?php echo $id_pma_d ?>)
+
                                         location.reload();
                                         update_product();
                                     } else if (result == 'error') {
@@ -209,16 +230,16 @@ elseif (isset($key) && $key == 'admin') :
                     foreach (Database::query($sql_drug_, PDO::FETCH_ASSOC) as $row_d) :
                     ?>
                         label_p.push('<?php echo $row_d['name_drug'] ?>');
-                        <?php endforeach;
+                    <?php endforeach;
                     foreach (Database::query($sql_drug_, PDO::FETCH_ASSOC) as $row_r) :
-                        $item = 0 ;
+                        $item = 0;
                         foreach (Database::query("SELECT * FROM `detail_history` WHERE id_drug = '{$row_r['id_drug']}'", PDO::FETCH_ASSOC) as $row_de) :
                             $item += $row_de['item'];
                         endforeach;
-                        ?>
+                    ?>
                         itm.push('<?php echo $item ?>');
                     <?php
-                        
+
                     endforeach; ?>
 
                     const ctx = document.getElementById('myChart').getContext('2d');

@@ -359,4 +359,6 @@ if (isset($_SESSION['key']) && ($_SESSION['key'] == 'admin' || $_SESSION['key'] 
         }
 
         // add_product('1', 'ยา', '150', 6);
+
+        
     </script>
