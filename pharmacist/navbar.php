@@ -257,6 +257,10 @@ if (isset($_SESSION['key']) && ($_SESSION['key'] == 'admin' || $_SESSION['key'] 
             var product = [];
             var int_i = 0;
 
+            if(stock == 0) {
+                
+                return alert("สินค้าหมด");
+            }
             // alert(stock)
             product_new = {
                 id_drug: id_drug,
@@ -293,7 +297,7 @@ if (isset($_SESSION['key']) && ($_SESSION['key'] == 'admin' || $_SESSION['key'] 
                     // if (stock > value.num_item) {
                     // alert(value.num_item);
                     if (value.id_drug == id_drug) {
-                        if (value.num_item + 1 > stock) {
+                        if (value.num_item   > stock - 1) {
                             int_i += 1;
                             alert('สินค้าหมด')
                             // update_product();

@@ -73,6 +73,9 @@ if (isset($key) && $key == 'pharmacist') :
                             const product = JSON.parse(json);
                             const trnsale = JSON.stringify(product)
                             // console.log(trnsale);
+                            if(product == null || product == '' ){
+                                return alert('กรุณาเพิ่มสินค้า')
+                            }
                             $.ajax({
                                 url: "controller/add_product.php",
                                 type: "POST",
@@ -83,7 +86,7 @@ if (isset($key) && $key == 'pharmacist') :
                                     id_mem: id_mem
                                 },
                                 success: function(result, textStatus, jqXHR) {
-                                    console.log(result);
+                                    // console.log(result);
                                     if (result == 'success') {
                                         removeCookie('product');
                                         alert("ขายสินค้าสำเร็จ")

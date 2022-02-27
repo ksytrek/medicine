@@ -25,7 +25,7 @@ if (isset($_GET['submit'])) {
             <div class="form-group ">
                 <div class="row">
                     <div class="col-md-4">
-                        <input type="date" name="start_date" class="form-control" value="<?php echo isset($_GET['start_date']) ? $_GET['start_date'] : '' ;?>">
+                        <input type="date" name="start_date" class="form-control" value="<?php echo isset($_GET['start_date']) ? $_GET['start_date'] : ''; ?>">
                     </div>
                     <div class="col-md-2 text-center">
                         ถึง
@@ -64,7 +64,7 @@ if (isset($_GET['submit'])) {
                         $sql_ord = "SELECT * FROM `order_history` as ord 
                                     INNER JOIN member as mm ON mm.id_mem = ord.id_mem 
                                     INNER JOIN pharmacist as pha on pha.id_pma = ord.id_pma  
-                                    $date_sq";
+                                    $date_sq ORDER BY ord.dateTime_oh DESC";
                         $i = null;
                         foreach (Database::query($sql_ord) as $row_ord) :
                         ?>
@@ -76,7 +76,10 @@ if (isset($_GET['submit'])) {
                                 <td><?php echo $row_ord['dateTime_oh']; ?></td>
                                 <td>
                                     <a href="javascript:void(0)" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#detli_<?php echo $row_ord['id_oh'] ?>">รายละเอียด</a>
-                                    <!-- <a href="javascript:void(0)" class="btn btn-info btn-sm">ใบเสร็จ</a> -->
+                                    <a href="javascript:window.print()" class="btn btn-primary btn-sm" >พิมพ์</a>
+                                    <button onclick="window.print()">Print this page</button>
+
+                                    <a href="./export?id_oh=<?php echo Encode_valu::encode($row_ord['id_oh'],"id_oh")  ?>&id_pma=<?php echo Encode_valu::encode($row_ord['id_pma'],"id_pma") ?>" class="btn btn-info btn-sm">ใบเสร็จ</a>
                                 </td>
                                 <div id="detli_<?php echo $row_ord['id_oh'] ?>" class="modal" tabindex="-1">
                                     <div class="modal-dialog modal-lg">
@@ -187,33 +190,3 @@ if (isset($_GET['submit'])) {
     F
 </script>
 <?php include("./footer.php") ?>
-
-
-
-
-<!-- <table class="table table-striped">
-    <thead>
-        <tr>
-            <th scope="col">ลำดับ</th>
-            <th scope="col">ชื่อยา</th>
-            <th scope="col">จำนวน</th>
-            <th scope="col">Handle</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php
-        $swl = "SELECT * FROM `detail_history` as det INNER JOIN drug_information as dru ON det.id_drug = dru.id_drug WHERE det.id_oh = '{$row_ord['id_oh']}'";
-        $o = null;
-        foreach (Database::query($swl, PDO::FETCH_ASSOC) as $row) :
-        ?>
-            <tr>
-                <th scope="row"><?php echo ++$o ?></th>
-                <td><?php echo $row['name_drug'] ?></td>
-                <td><?php echo $row['item'] ?></td>
-                <td><?php echo $row['price_drug'] ?></td>
-            </tr>
-        <?php
-        endforeach;
-        ?>
-    </tbody>
-</table> -->

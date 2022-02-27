@@ -5,7 +5,7 @@ session_start();
 
 if (isset($_POST['key']) && $_POST['key'] == 'add_trnsale') {
 
-    $id_pma = $_POST['id_pma'];
+    $id_pma = $_POST['id_pma']; 
     $id_mem = $_POST['id_mem'];
 
     $value = json_decode($_POST['data']);
@@ -15,7 +15,7 @@ if (isset($_POST['key']) && $_POST['key'] == 'add_trnsale') {
         $sum_total += $val->num_item * $val->price_unit;
     }
 
-    $sql_in_order = "INSERT INTO `order_history` (`id_oh`, `dateTime_oh`, `id_pma`, `id_mem`, `sum_pi`) VALUES (NULL, current_timestamp(), '$id_mem', '$id_mem', '$sum_total');";
+    $sql_in_order = "INSERT INTO `order_history` (`id_oh`, `dateTime_oh`, `id_pma`, `id_mem`, `sum_pi`) VALUES (NULL, current_timestamp(), '$id_pma', '$id_mem', '$sum_total');";
 
     try {
         if(Database::query($sql_in_order)){
@@ -37,7 +37,7 @@ if (isset($_POST['key']) && $_POST['key'] == 'add_trnsale') {
         }
         echo "success";
     } catch (Exception $e) {
-        echo "Error: " . $e->getMessage;
+        echo "Error: " . $e->getMessage();
     }
 
 
