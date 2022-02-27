@@ -25,13 +25,9 @@ if (isset($key) && $key == 'pharmacist') :
         function printDiv(id_oh, id_pma) {
             var divContents = document.getElementById("print").innerHTML;
             var a = window.open('export.php?id_oh=' + id_oh + '&id_pma=' + id_pma, "", "height='500', width='500'");
-            // , '', "height='100%', width='100%'"
-            // a.document.write('<html>');
-            // a.document.write('<body > <h1>Div contents are <br>');
-            // a.document.write(divContents);
-            // a.document.write('</body></html>');
             a.document.close();
             a.print();
+
         }
     </script>
     <section class="pricing-table section" id="pricing">
